@@ -1,19 +1,22 @@
+%define name	xpp
+%define version	1.5
+%define release	%mkrel 4
+
 Summary:	X Printing Panel
-Name:		xpp
-Version:	1.5
-Release:	%mkrel 3
+Name:		%{name}
+Version:	%{version}
+Release:	%{release}
 License:	GPL
 Group:		Publishing
 
-Source:		http://cups.sourceforge.net/xpp/%{name}-%{version}cvs.tar.bz2
-Source1:	xpp.png.bz2
+Source0:		http://cups.sourceforge.net/xpp/%{name}-%{version}cvs.tar.bz2
+Patch0:		xpp-1.5-qualification.patch
 
 Url:		http://cups.sourceforge.net/xpp/
 BuildRoot:	%_tmppath/%name-%version-%release-root
-Requires:	libcups1 >= 1.1.9
-BuildRequires:	libcups-devel >= 1.1.9, libfltk-devel
-BuildRequires:	cups, Mesa-common-devel, libstdc++-devel
-BuildRequires:	libpng-devel, libjpeg-devel
+BuildRequires:	libcups-devel libfltk-devel
+BuildRequires:	cups libstdc++-devel
+BuildRequires:	libpng-devel libjpeg-devel
 
 %description
 The X Printing Panel (XPP) is a completely free tool for easy choosing of
@@ -25,33 +28,31 @@ One simply calls the program (xpp) instead of the usual utilities
 %prep
 
 %setup -q
-# Load menu icon
-bzcat %SOURCE1 > $RPM_BUILD_DIR/%name-%version/xpp.png
+%patch0 -p1 -b .qual
 
 %build
 
 #export CXXFLAGS="${CXXFLAGS:-%optflags} -fno-exceptions -fno-rtti" ;
 %configure
 
-make
+%make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %makeinstall
 
-# install menu icon
-install -d %buildroot/%_datadir/icons/locolor/16x16/apps
-install -m 644 xpp.png %buildroot/%_iconsdir/locolor/16x16/apps
-
-# install menu entry
-install -d %buildroot/%_menudir
-cat <<EOF > %buildroot/%_menudir/xpp
-?package(xpp): needs=X11 \
-section=Configuration/Printing \
-title="XPP - X Printing Panel" \
-longtitle="Frontend for easy printing with CUPS" \
-command="xpp" \
-icon="printing_section.png"
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop <<EOF
+[Desktop Entry]
+Encoding=UTF-8
+Name=X Printing Panel
+Comment=Frontend for easy printing with CUPS
+Exec=%{_bindir}/%{name} 
+Icon=printing_section.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Utility;Settings;Printing;X-MandrivaLinux-System-Configuration-Printing;
 EOF
 
 # Use update-alternatives to make printing with XPP also possible with
@@ -83,5 +84,4 @@ rm -fr %buildroot
 %defattr(-,root,root)
 %doc README LICENSE ChangeLog
 %_bindir/*
-%_iconsdir/locolor/16x16/apps/*
-%_menudir/xpp
+%{_datadir}/applications/mandriva-%{name}.desktop
