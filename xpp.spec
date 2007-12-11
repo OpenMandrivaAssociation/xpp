@@ -47,7 +47,7 @@ cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop <<EOF
 Name=X Printing Panel
 Comment=Frontend for easy printing with CUPS
 Exec=%{_bindir}/%{name} 
-Icon=printing_section.png
+Icon=printing_section
 Terminal=false
 Type=Application
 StartupNotify=true
