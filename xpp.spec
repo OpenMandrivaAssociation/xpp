@@ -13,6 +13,7 @@ Source0:		http://cups.sourceforge.net/xpp/%{name}-%{version}cvs.tar.bz2
 Patch0:		xpp-1.5-qualification.patch
 
 Url:		http://cups.sourceforge.net/xpp/
+BuildRoot:	%_tmppath/%name-%version-%release-root
 BuildRequires:	libcups-devel libfltk-devel
 BuildRequires:	cups libstdc++-devel
 BuildRequires:	libpng-devel libjpeg-devel
