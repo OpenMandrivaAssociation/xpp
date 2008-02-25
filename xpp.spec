@@ -1,6 +1,6 @@
 %define name	xpp
 %define version	1.5
-%define release	%mkrel 4
+%define release	%mkrel 5
 
 Summary:	X Printing Panel
 Name:		%{name}
@@ -11,6 +11,7 @@ Group:		Publishing
 
 Source0:		http://cups.sourceforge.net/xpp/%{name}-%{version}cvs.tar.bz2
 Patch0:		xpp-1.5-qualification.patch
+Patch1:		xpp-bug27027.patch
 
 Url:		http://cups.sourceforge.net/xpp/
 BuildRoot:	%_tmppath/%name-%version-%release-root
@@ -29,13 +30,14 @@ One simply calls the program (xpp) instead of the usual utilities
 
 %setup -q
 %patch0 -p1 -b .qual
+%patch1 -p1
 
 %build
 
 #export CXXFLAGS="${CXXFLAGS:-%optflags} -fno-exceptions -fno-rtti" ;
 %configure
 
-%make
+make
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -46,7 +48,7 @@ cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop <<EOF
 [Desktop Entry]
 Name=X Printing Panel
 Comment=Frontend for easy printing with CUPS
-Exec=%{_bindir}/%{name} 
+Exec=%{_bindir}/%{name}
 Icon=printing_section
 Terminal=false
 Type=Application
