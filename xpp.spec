@@ -64,7 +64,9 @@ EOF
 )
 
 %post
+%if %mdkversion < 200900
 %update_menus
+%endif
 # Set up update-alternatives entry
 %{_sbindir}/update-alternatives --install %{_bindir}/lpr lpr %{_bindir}/lpr-xpp 8
 
@@ -75,8 +77,10 @@ if [ "$1" = 0 ]; then
   %{_sbindir}/update-alternatives --remove lpr /usr/bin/lpr-xpp
 fi
 
+%if %mdkversion < 200900
 %postun
 %clean_menus
+%endif
 
 %clean
 rm -fr %buildroot
