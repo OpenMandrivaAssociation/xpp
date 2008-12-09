@@ -15,7 +15,7 @@ Patch1:		xpp-bug27027.patch
 
 Url:		http://cups.sourceforge.net/xpp/
 BuildRoot:	%_tmppath/%name-%version-%release-root
-BuildRequires:	libcups-devel libfltk-devel
+BuildRequires:	libcups-devel fltk-devel
 BuildRequires:	cups libstdc++-devel
 BuildRequires:	libpng-devel libjpeg-devel
 
