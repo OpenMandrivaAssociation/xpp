@@ -12,7 +12,7 @@ Group:		Publishing
 Source0:		http://cups.sourceforge.net/xpp/%{name}-%{version}cvs.tar.bz2
 Patch0:		xpp-1.5-qualification.patch
 Patch1:		xpp-bug27027.patch
-
+Patch2:		xpp-new-fltk.patch
 Url:		http://cups.sourceforge.net/xpp/
 BuildRoot:	%_tmppath/%name-%version-%release-root
 BuildRequires:	libcups-devel fltk-devel
@@ -27,21 +27,19 @@ One simply calls the program (xpp) instead of the usual utilities
 (lpr or lp) at the command line or out of applications.
 
 %prep
-
 %setup -q
 %patch0 -p1 -b .qual
 %patch1 -p1
+%patch2 -p0
 
 %build
-
-#export CXXFLAGS="${CXXFLAGS:-%optflags} -fno-exceptions -fno-rtti" ;
-%configure
+%configure2_5x
 
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%makeinstall
+%makeinstall_std
 
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop <<EOF
