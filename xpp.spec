@@ -13,6 +13,7 @@ Source0:		http://cups.sourceforge.net/xpp/%{name}-%{version}cvs.tar.bz2
 Patch0:		xpp-1.5-qualification.patch
 Patch1:		xpp-bug27027.patch
 Patch2:		xpp-new-fltk.patch
+Patch3:		xpp_wformat.patch
 Url:		http://cups.sourceforge.net/xpp/
 BuildRoot:	%_tmppath/%name-%version-%release-root
 BuildRequires:	libcups-devel fltk-devel
@@ -31,6 +32,7 @@ One simply calls the program (xpp) instead of the usual utilities
 %patch0 -p1 -b .qual
 %patch1 -p1
 %patch2 -p0
+%patch3 -p1
 
 %build
 %configure2_5x
