@@ -1,6 +1,6 @@
 %define name	xpp
 %define version	1.5
-%define release	%mkrel 7
+%define release	%mkrel 8
 
 Summary:	X Printing Panel
 Name:		%{name}
