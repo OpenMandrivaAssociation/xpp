@@ -1,0 +1,12 @@
+diff -p -up xpp-1.5/xpp.cxx.constchar xpp-1.5/xpp.cxx
+--- xpp-1.5/xpp.cxx.constchar	2009-09-28 15:57:33.000000000 +0200
++++ xpp-1.5/xpp.cxx	2009-09-28 15:57:53.000000000 +0200
+@@ -197,7 +197,7 @@ printFiles::printFiles(int  argc, /* I -
+ 	    {	  
+ 	      char *tmp;
+ 
+-	      if ((tmp = strchr(dest,'/'))) {
++	      if ((tmp = (char *) strchr(dest,'/'))) {
+ 		tmp[0] = '\0';
+ 		instance = tmp + 1;
+ 	      }	

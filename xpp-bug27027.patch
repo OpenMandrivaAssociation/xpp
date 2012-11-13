@@ -1,0 +1,61 @@
+--- xpp-1.5/cupshelper.cxx.orig	2005-01-13 03:42:36.000000000 +0100
++++ xpp-1.5/cupshelper.cxx	2008-12-14 12:07:34.000000000 +0100
+@@ -163,7 +163,10 @@
+   int	  value(-1);
+   
+   request->request.op.operation_id = IPP_GET_PRINTER_ATTRIBUTES;
+-  sprintf(str,"ipp://%s:%d/printers/%s",host(),port(),name);
++  if  (host()[0] == '/') // unix domain socket
++  	sprintf(str,"ipp://localhost:%d/printers/%s",port(),name);
++  else
++  	sprintf(str,"ipp://%s:%d/printers/%s",host(),port(),name);
+   ippAddString(request,IPP_TAG_OPERATION,IPP_TAG_URI,"printer-uri",NULL,str);
+   //sprintf(str,"/printers/%s",name);
+   sprintf(str,"/printers/");
+--- xpp-1.5/xpp.cxx.orig	2005-08-28 17:33:08.000000000 +0200
++++ xpp-1.5/xpp.cxx	2008-12-14 12:07:34.000000000 +0100
+@@ -318,8 +318,12 @@
+     ipp_t *request = CupsHelper::newIppRequest();
+     char buf[1024];
+     char *state = NULL, *type = NULL, *location = NULL, *comment = NULL;
+-    sprintf(buf,"ipp://%s:%d/printers/%s",CupsHelper::host(),
+-            CupsHelper::port(),dests[i].name);
++    if (CupsHelper::host()[0] == '/') // unix domain socket
++	    sprintf(buf,"ipp://localhost:%d/printers/%s",CupsHelper::port(),
++		    dests[i].name);
++    else
++	    sprintf(buf,"ipp://%s:%d/printers/%s",CupsHelper::host(),
++		    CupsHelper::port(),dests[i].name);
+     ippAddString(request,IPP_TAG_OPERATION,IPP_TAG_URI,"printer-uri",NULL,buf);
+     request->request.op.operation_id = IPP_GET_PRINTER_ATTRIBUTES;
+     request = CupsHelper::processRequest(request,"/printers/");
+@@ -760,8 +764,12 @@
+   ipp_t *request = CupsHelper::newIppRequest();
+   char buffer[1024], *t;
+   const char *s, *u;
+-  sprintf(buffer,"ipp://%s:%d/printers/%s",CupsHelper::host(),
+-          CupsHelper::port(),dests[dest_pos].name);
++  if (CupsHelper::host()[0] == '/')
++    sprintf(buffer,"ipp://localhost:%d/printers/%s", CupsHelper::port(),
++	    dests[dest_pos].name);
++  else
++    sprintf(buffer,"ipp://%s:%d/printers/%s",CupsHelper::host(),
++	    CupsHelper::port(),dests[dest_pos].name);
+   ippAddString(request,IPP_TAG_OPERATION,IPP_TAG_URI,
+                "printer-uri",NULL,buffer);
+   request->request.op.operation_id = IPP_GET_PRINTER_ATTRIBUTES;
+@@ -833,8 +841,12 @@
+   ipp_t *request = CupsHelper::newIppRequest();
+   char buffer[1024]; 
+   const char *s, *t, *u;
+-  sprintf(buffer,"ipp://%s:%d/printers/%s",CupsHelper::host(),
+-          CupsHelper::port(),dests[dest_pos].name);
++  if (CupsHelper::host()[0] == '/') // unix domain socket
++    sprintf(buffer,"ipp://localhost:%d/printers/%s",CupsHelper::port(),
++            dests[dest_pos].name);
++  else
++    sprintf(buffer,"ipp://%s:%d/printers/%s",CupsHelper::host(),
++            CupsHelper::port(),dests[dest_pos].name);
+   ippAddString(request,IPP_TAG_OPERATION,IPP_TAG_URI,
+                "printer-uri",NULL,buffer);
+   request->request.op.operation_id = IPP_GET_PRINTER_ATTRIBUTES;

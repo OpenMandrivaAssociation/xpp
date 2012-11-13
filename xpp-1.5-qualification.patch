@@ -1,0 +1,11 @@
+--- xpp-1.5/xpp.h	2006-03-10 15:46:13.000000000 +0000
++++ xpp-1.5/xpp.h.new	2006-03-10 15:46:19.000000000 +0000
+@@ -179,7 +179,7 @@
+    */
+ 
+   int /* O - index of the record of the given option in the array */
+-  printFiles::getSpecialOptionIndex(int *num_special_opts_in_arr,
++  getSpecialOptionIndex(int *num_special_opts_in_arr,
+ 				      /* number of options in the array */
+ 				      special_opt_t **special_opts_arr,
+                                       /* array of numerical/string 
