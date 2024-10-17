@@ -15,7 +15,7 @@ Patch1:		xpp-bug27027.patch
 Patch2:		xpp-new-fltk.patch
 Patch3:		xpp_wformat.patch
 Patch4:		xpp-1.5-constchar.patch
-Url:		http://cups.sourceforge.net/xpp/
+Url:		https://cups.sourceforge.net/xpp/
 BuildRoot:	%_tmppath/%name-%version-%release-root
 BuildRequires:	libcups-devel fltk-devel
 BuildRequires:	cups libstdc++-devel
